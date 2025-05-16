@@ -16,13 +16,14 @@
 #define MAX_GRADE 150
 #define MIN_GRADE 1
 
+#include "ansi.h"
 #include <iostream>
 
 class Bureaucrat
 {
 	public:
 		Bureaucrat();
-		Bureaucrat(const std::string _name, size_t grade);
+		Bureaucrat(const std::string name, size_t grade);
 		~Bureaucrat();
 		Bureaucrat(const Bureaucrat& rhs);
 		Bureaucrat &operator=(const Bureaucrat& rhs);
@@ -33,6 +34,16 @@ class Bureaucrat
 		void incrementGrade();
 		void decrementGrade();
 
+		class GradeTooHighException: public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
+		class GradeTooLowException: public std::exception
+		{
+			public:
+				const char *what() const throw();
+		};
 
 	private:
 		const std::string _name;
