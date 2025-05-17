@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ShrubberyCreationForm.cpp                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: meferraz <meferraz@student.42porto.pt>     #+#  +:+       +#+        */
+/*   By: meferraz <meferraz@student.42porto.pt>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-16 15:49:44 by meferraz          #+#    #+#             */
-/*   Updated: 2025-05-16 15:49:44 by meferraz         ###   ########.fr       */
+/*   Created: 2025/05/16 15:49:44 by meferraz          #+#    #+#             */
+/*   Updated: 2025/05/17 10:14:27 by meferraz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ShrubberyCreationForm.hpp"
 
 ShrubberyCreationForm::ShrubberyCreationForm()
+: AForm("Shrubbery Creation", 145, 137), _target("")
 {}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const std::string &target)
@@ -27,7 +28,7 @@ ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm& rhs)
 : AForm(rhs), _target(rhs._target)
 {}
 
-hrubberyCreationForm::operator=(const ShrubberyCreationForm &rhs)
+ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationForm &rhs)
 {
 	(void)rhs;
 	return *this;

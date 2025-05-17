@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   Bureaucrat.cpp                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: meferraz <meferraz@student.42porto.pt>     #+#  +:+       +#+        */
+/*   By: meferraz <meferraz@student.42porto.pt>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-16 07:55:23 by meferraz          #+#    #+#             */
-/*   Updated: 2025-05-16 07:55:23 by meferraz         ###   ########.fr       */
+/*   Created: 2025/05/16 07:55:23 by meferraz          #+#    #+#             */
+/*   Updated: 2025/05/17 14:31:27 by meferraz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,11 @@ const char *Bureaucrat::GradeTooLowException::what() const throw()
 	return "Grade is too low.";
 }
 
-void Bureaucrat::signForm(Form &form)
+void Bureaucrat::signForm(AForm &form)
 {
 	try
 	{
 		form.beSigned(*this);
-		std::cout << GRN << "✅ Form has been successfully signed!" << RESET << std::endl;
 	}
 	catch(std::exception &e)
 	{
@@ -92,10 +91,13 @@ void Bureaucrat::executeForm(const AForm &form) const
 	try
 	{
 		form.execute(*this);
-		std::cout << _name << " executed " << form.getName() << std::endl;
+		std::cout << BLU << _name  << RESET << " executed "
+		<< MAG << form.getName() << RESET<< std::endl;
 	} catch (std::exception &e)
 	{
-		std::cerr << RED << _name << " couldn't execute " << form.getName() << ": " << e.what() << RESET << std::endl;
+		std::cerr << BLU << _name << RED << " couldn't execute "
+		<< MAG << form.getName() << RED << ": " << e.what()
+		<< RESET << std::endl;
 	}
 }
 
@@ -105,6 +107,6 @@ std::ostream& operator<<(std::ostream& out, const Bureaucrat& rhs)
 	<< GRN ", bureaucrate grade "
 	<< YEL << rhs.getGrade()
 	<< GRN << "."
-	<< RESET << std::endl;
+	<< RESET;
 	return out;
 }

@@ -3,14 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.cpp                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: meferraz <meferraz@student.42porto.pt>     #+#  +:+       +#+        */
+/*   By: meferraz <meferraz@student.42porto.pt>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-16 08:20:26 by meferraz          #+#    #+#             */
-/*   Updated: 2025-05-16 08:20:26 by meferraz         ###   ########.fr       */
+/*   Created: 2025/05/16 08:20:26 by meferraz          #+#    #+#             */
+/*   Updated: 2025/05/17 14:27:17 by meferraz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Bureaucrat.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 #include <iostream>
 
 #define SEPARATOR(txt) std::cout << "\n" \
@@ -18,132 +21,102 @@
 << "📄 " << txt << "\n" \
 << "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" RESET "\n" << std::endl;
 
-void testValidBureaucrat();
-void testGradeTooHigh();
-void testGradeTooLow();
-void testIncrementBeyondLimit();
-void testDecrementBeyondLimit();
-void testValidFormCreation();
-void testFormSigningSuccess();
-void testFormSigningFailure();
+void testShrubberyForm();
+void testRobotomyForm();
+void testPresidentialForm();
+void testFormExecutionFailures();
 
 int main()
 {
 	std::cout << BGRN "\n\n📋===== BUREAUCRACY SIMULATION =====📋\n\n" RESET;
 
-	testValidBureaucrat();
-	testGradeTooHigh();
-	testGradeTooLow();
-	testIncrementBeyondLimit();
-	testDecrementBeyondLimit();
-
-	testValidFormCreation();
-	testFormSigningSuccess();
-	testFormSigningFailure();
+	testShrubberyForm();
+	testRobotomyForm();
+	testPresidentialForm();
+	testFormExecutionFailures();
 
 	std::cout << BGRN "\n✅ All tests complete!\n\n" RESET;
 	return 0;
 }
 
-void testValidBureaucrat()
+void testShrubberyForm()
 {
-	SEPARATOR("✅ Valid Bureaucrat Creation and Operations");
+	SEPARATOR("🌳 Shrubbery Creation Form Test");
 	try {
-		Bureaucrat alice("Alice", 75);
-		std::cout << alice << std::endl;
+		Bureaucrat gardener("Gardener", 130);
+		ShrubberyCreationForm shrubForm("HomeGarden");
 
-		std::cout << BLUB "Incrementing grade..." NC << std::endl;
-		alice.incrementGrade();
-		std::cout << alice << std::endl;
-
-		std::cout << BLUB "Decrementing grade..." NC << std::endl;
-		alice.decrementGrade();
-		std::cout << alice << std::endl;
-	} catch (const std::exception &e) {
-		std::cerr << RED << "Exception caught: " << e.what() << RESET << std::endl;
+		std::cout << shrubForm << std::endl;
+		gardener.signForm(shrubForm);
+		gardener.executeForm(shrubForm);
+	}
+	catch (const std::exception& e) {
+		std::cerr << RED << "Exception: " << e.what() << RESET << std::endl;
 	}
 }
 
-void testGradeTooHigh()
+void testRobotomyForm()
 {
-	SEPARATOR("🚫 Creating Bureaucrat with Grade Too High");
+	SEPARATOR("🤖 Robotomy Request Form Test");
 	try {
-		Bureaucrat overachiever("Overachiever", 0);
-		std::cout << overachiever << std::endl;
-	} catch (const Bureaucrat::GradeTooHighException &e) {
-		std::cerr << RED "Caught High Exception: " << e.what() << RESET << std::endl;
+		Bureaucrat surgeon("Surgeon", 40);
+		RobotomyRequestForm robotForm("Bender");
+
+		std::cout << robotForm << std::endl;
+		surgeon.signForm(robotForm);
+		surgeon.executeForm(robotForm);
+		// Test multiple executions to see random success/failure
+		surgeon.executeForm(robotForm);
+		surgeon.executeForm(robotForm);
+	}
+	catch (const std::exception& e) {
+		std::cerr << RED << "Exception: " << e.what() << RESET << std::endl;
 	}
 }
 
-void testGradeTooLow()
+void testPresidentialForm()
 {
-	SEPARATOR("🚫 Creating Bureaucrat with Grade Too Low");
+	SEPARATOR("🦅 Presidential Pardon Form Test");
 	try {
-		Bureaucrat slacker("Slacker", 151);
-		std::cout << slacker << std::endl;
-	} catch (const Bureaucrat::GradeTooLowException &e) {
-		std::cerr << RED "Caught Low Exception: " << e.what() << RESET << std::endl;
+		Bureaucrat president("President", 1);
+		PresidentialPardonForm pardonForm("Snowden");
+
+		std::cout << pardonForm << std::endl;
+		president.signForm(pardonForm);
+		president.executeForm(pardonForm);
+	}
+	catch (const std::exception& e) {
+		std::cerr << RED << "Exception: " << e.what() << RESET << std::endl;
 	}
 }
 
-void testIncrementBeyondLimit()
+void testFormExecutionFailures()
 {
-	SEPARATOR("🚫 Incrementing Grade Beyond Limit");
+	SEPARATOR("🚫 Form Execution Failures");
 	try {
-		Bureaucrat top("Top", MIN_GRADE);
-		std::cout << top << std::endl;
-		std::cout << BLUB "Attempting to increment grade..." NC << std::endl;
-		top.incrementGrade();
-	} catch (const Bureaucrat::GradeTooHighException &e) {
-		std::cerr << RED "Caught High Exception: " << e.what() << RESET << std::endl;
-	}
-}
+		// Unsigned form test
+		Bureaucrat clerk("Clerk", 20);
+		ShrubberyCreationForm unsignedForm("OfficePark");
+		std::cout << unsignedForm << std::endl;
+		std::cout << clerk << std::endl;
+		clerk.executeForm(unsignedForm);
+		std::cout << std::endl;
 
-void testDecrementBeyondLimit()
-{
-	SEPARATOR("🚫 Decrementing Grade Beyond Limit");
-	try {
-		Bureaucrat bottom("Bottom", MAX_GRADE);
-		std::cout << bottom << std::endl;
-		std::cout << BLUB "Attempting to decrement grade..." NC << std::endl;
-		bottom.decrementGrade();
-	} catch (const Bureaucrat::GradeTooLowException &e) {
-		std::cerr << RED "Caught Low Exception: " << e.what() << RESET << std::endl;
-	}
-}
+		// Insufficient grade test
 
-void testValidFormCreation()
-{
-	SEPARATOR("✅ Valid Form Creation");
-	try {
-		Form form("Presidential Pardon", 1, 1);
-		std::cout << form << std::endl;
-	} catch (const std::exception &e) {
-		std::cerr << RED << "Exception caught: " << e.what() << RESET << std::endl;
+		Bureaucrat intern("Intern", 150);
+		PresidentialPardonForm pardonForm("Intern");
+		std::cout << pardonForm << std::endl;
+		std::cout << intern << std::endl;
+		intern.signForm(pardonForm);
+		clerk.signForm(pardonForm);
+		intern.executeForm(pardonForm);
+		clerk.executeForm(pardonForm);
+		std::cout << std::endl;
+		Bureaucrat president("President", 1);
+		president.executeForm(pardonForm);
 	}
-}
-
-void testFormSigningSuccess()
-{
-	SEPARATOR("✅ Successful Form Signing");
-	try {
-		Bureaucrat bureaucrat("Alice", 50);
-		Form form("Shrubbery Request", 60, 70);
-		bureaucrat.signForm(form);
-		std::cout << form << std::endl;
-	} catch (const std::exception &e) {
-		std::cerr << RED << "Exception caught: " << e.what() << RESET << std::endl;
-	}
-}
-
-void testFormSigningFailure()
-{
-	SEPARATOR("🚫 Failed Form Signing");
-	try {
-		Bureaucrat bureaucrat("Bob", 100);
-		Form form("Presidential Pardon", 1, 1);
-		bureaucrat.signForm(form);
-	} catch (const std::exception &e) {
-		std::cerr << RED << "Exception caught: " << e.what() << RESET << std::endl;
+	catch (const std::exception& e) {
+		std::cerr << RED << "Exception: " << e.what() << RESET << std::endl;
 	}
 }

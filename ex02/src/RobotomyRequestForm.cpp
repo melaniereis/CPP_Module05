@@ -13,6 +13,7 @@
 #include "RobotomyRequestForm.hpp"
 
 RobotomyRequestForm::RobotomyRequestForm()
+	: AForm("Robotomy Request", 72, 45)
 {}
 
 RobotomyRequestForm::RobotomyRequestForm(const std::string &target)
@@ -34,7 +35,7 @@ RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& rhs)
 : AForm(rhs), _target(rhs._target)
 {}
 
-hrubberyCreationForm::operator=(const RobotomyRequestForm &rhs)
+RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm &rhs)
 {
 	(void)rhs;
 	return *this;
@@ -42,9 +43,10 @@ hrubberyCreationForm::operator=(const RobotomyRequestForm &rhs)
 
 void RobotomyRequestForm::executeAction() const
 {
-	std::cout << "Drilling noises..." << std::endl;
+	std::cout << "🤖 " << YELHB << "Drilling noises..." << RESET << std::endl;
 	if (std::rand() % 2 == 0)
-		std::cout << _target << " has been robotomized successfully!" << std::endl;
+		std::cout << BLU << _target << GRN << " has been robotomized successfully!"
+		<< RESET << std::endl;
 	else
-		std::cout << "Robotomy failed!" << std::endl;
+		std::cout << BLU << _target << RED << "'s robotomy failed!" << RESET << std::endl;
 }

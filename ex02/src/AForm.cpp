@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   AForm.cpp                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: meferraz <meferraz@student.42porto.pt>     #+#  +:+       +#+        */
+/*   By: meferraz <meferraz@student.42porto.pt>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025-05-16 15:04:47 by meferraz          #+#    #+#             */
-/*   Updated: 2025-05-16 15:04:47 by meferraz         ###   ########.fr       */
+/*   Created: 2025/05/16 15:04:47 by meferraz          #+#    #+#             */
+/*   Updated: 2025/05/17 14:27:44 by meferraz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void AForm::beSigned(const Bureaucrat &rhs)
 	if (rhs.getGrade() > _gradeToSign)
 		throw GradeTooLowException();
 	_isSigned = true;
+	std::cout << GRN << "✅ Form has been successfully signed!" << RESET << std::endl;
 }
 
 void AForm::execute(Bureaucrat const& executor) const
@@ -101,13 +102,13 @@ void AForm::execute(Bureaucrat const& executor) const
 std::ostream& operator<<(std::ostream& out, const AForm& rhs)
 {
 	out << MAG << rhs.getName()
-	<< GRN " Form, grade to sign is: "
-	<< YEL << rhs.getGradeToSign()
-	<< GRN ", grade to execute is: "
-	<< YEL << rhs.getGradeToExecute()
-	<< GRN " and has it been signed? "
-	<< YEL << (rhs.getIsSigned() ? "signed" : "not signed")
-	<< GRN << "."
-	<< RESET << std::endl;
+		<< GRN " Form, grade to sign is: "
+		<< YEL << rhs.getGradeToSign()
+		<< GRN ", grade to execute is: "
+		<< YEL << rhs.getGradeToExecute()
+		<< GRN " and has it been signed? "
+		<< YEL << (rhs.getIsSigned() ? "signed" : "not signed")
+		<< GRN << "."
+		<< RESET;
 	return out;
 }
