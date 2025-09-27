@@ -861,6 +861,6 @@ After mastering Module 05, you'll be ready to tackle:
 
 *"Exception handling is not about expecting failure, it's about building resilient systems."*
 
-**Module 05 Complete** ✨ | **Previous**: [← Module 04](../CPP_Module04/README.md) | **Next**: [Module 06 →](../CPP_Module06/README.md)
+**Module 05 Complete** ✨ | **Previous**: [← Module 04](https://github.com/melaniereis/CPP_Module04/) | **Next**: [Module 06 →](https://github.com/melaniereis/CPP_Module06/)
 
 </div>
